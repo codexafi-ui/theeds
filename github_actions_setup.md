@@ -88,10 +88,10 @@ dry_run = false
 
 ## Schedule
 
-The workflow runs as a watcher every 10 minutes:
+The workflow runs as targeted watchers near this week's randomized posting times:
 
 ```text
-Every 10 minutes, offset from the exact hour
+Several times per hour around the prepared schedule
 ```
 
 Actual post times are not fixed. They are generated daily in:
@@ -100,7 +100,7 @@ Actual post times are not fixed. They are generated daily in:
 daily_ops/YYYY-MM-DD/06_posting_schedule.csv
 ```
 
-The publisher only posts items whose randomized schedule time is due within the last 75 minutes. This avoids fixed daily post times while still allowing GitHub Actions to recover from delayed or skipped scheduled runs.
+The publisher only posts items whose randomized schedule time is due within the last 150 minutes. This avoids fixed daily post times while still allowing GitHub Actions to recover from delayed or skipped scheduled runs.
 
 ## Important
 
