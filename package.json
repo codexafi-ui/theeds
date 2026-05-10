@@ -1,0 +1,15 @@
+{
+  "name": "sns-affiliate-ops",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate_daily_affiliate_ops.mjs",
+    "precheck": "node github_precheck_today.mjs",
+    "publish:threads": "node publish_social_queue.mjs --platform Threads",
+    "publish:threads:dry": "node publish_social_queue.mjs --platform Threads --dry-run"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

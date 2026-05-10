@@ -1,0 +1,62 @@
+name: Threads Auto Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Date in YYYY-MM-DD, default is current UTC date"
+        required: false
+        type: string
+      dry_run:
+        description: "Run without publishing"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+  schedule:
+    # Watcher runs every 30 minutes. Actual posts use randomized times in 06_posting_schedule.csv.
+    - cron: "*/30 * * * *"
+
+jobs:
+  threads:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+      THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      TZ: Asia/Tokyo
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Resolve date
+        id: date
+        shell: bash
+        run: |
+          if [ -n "${{ inputs.date }}" ]; then
+            echo "date=${{ inputs.date }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "date=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate daily ops
+        run: node generate_daily_affiliate_ops.mjs "${{ steps.date.outputs.date }}"
+
+      - name: Pre-publish local check
+        run: node github_precheck_today.mjs --date "${{ steps.date.outputs.date }}"
+
+      - name: Dry run
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == 'true' }}
+        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --dry-run
+
+      - name: Publish Threads
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == 'false') }}
+        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --due-minutes 35
