@@ -501,8 +501,11 @@ Error validating access token
 
 ```text
 1. threads_oauth_helper.ps1 でトークンを取り直す
-2. GitHub Secrets の THREADS_ACCESS_TOKEN を更新
+2. exchange_threads_long_lived_token.ps1 で長期トークンに交換する
+3. GitHub Secrets の THREADS_ACCESS_TOKEN を長期トークンに更新
 ```
+
+短期トークンのままだと短時間で期限切れします。長期トークンは公式の `GET https://graph.threads.net/access_token` で `grant_type=th_exchange_token` を使って交換します。
 
 ### 二重投稿
 
