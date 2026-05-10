@@ -24,8 +24,8 @@ on:
           - "Threads Post 1"
           - "Threads Post 2"
   schedule:
-    # Watcher runs every 30 minutes. Actual posts use randomized times in 06_posting_schedule.csv.
-    - cron: "*/30 * * * *"
+    # Watcher runs every 10 minutes with an offset. Actual posts use randomized times in 06_posting_schedule.csv.
+    - cron: "7,17,27,37,47,57 * * * *"
 
 jobs:
   threads:
@@ -67,7 +67,7 @@ jobs:
 
       - name: Publish Threads
         if: ${{ github.event_name == 'schedule' }}
-        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --due-minutes 35
+        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --due-minutes 75
 
       - name: Require manual post selection
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == 'false' && inputs.post == '' }}

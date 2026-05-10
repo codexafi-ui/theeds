@@ -169,11 +169,11 @@ Threads:
 2本目: 21:45〜23:30
 ```
 
-GitHub Actionsは30分ごとに見回り、予定時刻から35分以内の投稿だけ実行します。
+GitHub Actionsは10分ごとに見回り、予定時刻から75分以内の投稿だけ実行します。
 
 ```text
 GitHub Actions:
-30分ごとに起動
+10分ごとに起動
 
 06_posting_schedule.csv:
 日ごとの投稿予定時刻
@@ -387,7 +387,7 @@ Threads Auto Publish
 ↓
 投稿前チェック
 ↓
-予定時刻から35分以内のThreads投稿だけ実行
+予定時刻から75分以内のThreads投稿だけ実行
 ```
 
 手動実行:
