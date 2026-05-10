@@ -68,9 +68,9 @@ function schedule(dateString, index) {
   return [
     { platform: "X", slot: "morning", time: randomTime(rand, 7, 40, 9, 10), file: "01_x_posts.md", post: "X Post 1" },
     { platform: "X", slot: "lunch", time: randomTime(rand, 12, 5, 13, 20), file: "01_x_posts.md", post: "X Post 2" },
-    { platform: "Threads", slot: "evening", time: randomTime(rand, 18, 30, 20, 20), file: "02_threads_posts.md", post: "Threads Post 1" },
+    { platform: "Threads", slot: "prime-night-1", time: randomTime(rand, 20, 0, 21, 40), file: "02_threads_posts.md", post: "Threads Post 1" },
     { platform: "X", slot: "night", time: randomTime(rand, 20, 10, 22, 40), file: "01_x_posts.md", post: "X Post 3" },
-    { platform: "Threads", slot: "night", time: randomTime(rand, 20, 30, 23, 0), file: "02_threads_posts.md", post: "Threads Post 2" },
+    { platform: "Threads", slot: "prime-night-2", time: randomTime(rand, 21, 45, 23, 30), file: "02_threads_posts.md", post: "Threads Post 2" },
   ].map((item) => ({ ...item, date: dateString }));
 }
 

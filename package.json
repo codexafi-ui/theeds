@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "generate": "node generate_daily_affiliate_ops.mjs",
+    "generate:week": "node generate_week_ops.mjs",
     "precheck": "node github_precheck_today.mjs",
     "publish:threads": "node publish_social_queue.mjs --platform Threads",
     "publish:threads:dry": "node publish_social_queue.mjs --platform Threads --dry-run"
