@@ -15,6 +15,14 @@ on:
         options:
           - "true"
           - "false"
+      post:
+        description: "Manual publish target. Example: Threads Post 1. Required when dry_run=false."
+        required: false
+        type: choice
+        options:
+          - ""
+          - "Threads Post 1"
+          - "Threads Post 2"
   schedule:
     # Watcher runs every 30 minutes. Actual posts use randomized times in 06_posting_schedule.csv.
     - cron: "*/30 * * * *"
@@ -61,6 +69,12 @@ jobs:
         if: ${{ github.event_name == 'schedule' }}
         run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --due-minutes 35
 
+      - name: Require manual post selection
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == 'false' && inputs.post == '' }}
+        run: |
+          echo "Choose a single post when dry_run=false."
+          exit 1
+
       - name: Publish Threads Now
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == 'false' }}
-        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == 'false' && inputs.post != '' }}
+        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --post "${{ inputs.post }}"
