@@ -483,6 +483,8 @@ node analyze_social_csv.mjs your_analytics.csv weekly_analysis_report.md
 
 月曜の投稿生成では、`weekly_analysis_report.md` を前提として読み込むルールを入れています。
 
+ただし初週は分析レポートが存在しないため、GitHub Actionsでは `BOOTSTRAP_WITHOUT_WEEKLY_ANALYSIS=1` を設定し、リンクなし投稿は止めないようにしました。
+
 ## 16. 注意点
 
 ### Threadsトークン期限切れ

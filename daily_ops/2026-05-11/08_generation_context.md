@@ -8,7 +8,7 @@ No weekly analysis report found.
 
 ## Monday Rule
 
-Monday generation requires weekly_analysis_report.md. Treat today's queue as draft/hold-for-review until analysis is available.
+Bootstrap mode is enabled. Missing weekly analysis will not block link-free posts.
 
 ## Pre-Publish Rule
 

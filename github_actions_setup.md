@@ -10,6 +10,8 @@ The workflow:
 2. Creates `09_pre_publish_decisions.csv` with a local safety check.
 3. Publishes eligible Threads posts using the official Threads API.
 
+For the first week, `BOOTSTRAP_WITHOUT_WEEKLY_ANALYSIS=1` is enabled in GitHub Actions so missing Sunday analytics does not block link-free posts.
+
 ## Files
 
 - `.github/workflows/threads-auto-publish.yml`

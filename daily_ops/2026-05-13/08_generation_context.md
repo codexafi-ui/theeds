@@ -8,7 +8,7 @@ No weekly analysis report found.
 
 ## Monday Rule
 
-Weekly analysis requirement satisfied or not Monday.
+Bootstrap mode is enabled. Missing weekly analysis will not block link-free posts.
 
 ## Pre-Publish Rule
 

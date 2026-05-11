@@ -241,8 +241,10 @@ const posts = postSet(theme, selectedProducts);
 const replies = replyGuidance(theme);
 const postingSchedule = schedule(dateArg, index);
 const weeklyAnalysis = latestWeeklyAnalysis(root);
-const mondayNeedsAnalysis = isMonday(dateArg) && !weeklyAnalysis.text;
-const autoQueue = buildAutoQueue(dateArg, posts, replies, postingSchedule, !weeklyAnalysis.text);
+const bootstrapMode = process.env.BOOTSTRAP_WITHOUT_WEEKLY_ANALYSIS === "1";
+const missingWeeklyAnalysisBlocksQueue = !bootstrapMode && !weeklyAnalysis.text;
+const mondayNeedsAnalysis = isMonday(dateArg) && missingWeeklyAnalysisBlocksQueue;
+const autoQueue = buildAutoQueue(dateArg, posts, replies, postingSchedule, missingWeeklyAnalysisBlocksQueue);
 
 writeFile("01_x_posts.md", posts.xPosts.map((post, i) => `## X Post ${i + 1}\n\n${post}\n`).join("\n"));
 writeFile("02_threads_posts.md", posts.threadsPosts.map((post, i) => `## Threads Post ${i + 1}\n\n${post}\n`).join("\n"));
@@ -265,7 +267,7 @@ ${compactAnalysis(weeklyAnalysis.text)}
 
 ## Monday Rule
 
-${mondayNeedsAnalysis ? "Monday generation requires weekly_analysis_report.md. Treat today's queue as draft/hold-for-review until analysis is available." : "Weekly analysis requirement satisfied or not Monday."}
+${mondayNeedsAnalysis ? "Monday generation requires weekly_analysis_report.md. Treat today's queue as draft/hold-for-review until analysis is available." : bootstrapMode ? "Bootstrap mode is enabled. Missing weekly analysis will not block link-free posts." : "Weekly analysis requirement satisfied or not Monday."}
 
 ## Pre-Publish Rule
 

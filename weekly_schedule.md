@@ -1,10 +1,5 @@
 # Weekly Posting Schedule
 
-## 2026-05-10
-
-- 21:03 Threads: Threads Post 1
-- 23:25 Threads: Threads Post 2
-
 ## 2026-05-11
 
 - 20:38 Threads: Threads Post 1
