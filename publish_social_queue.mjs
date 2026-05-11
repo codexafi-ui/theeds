@@ -17,6 +17,8 @@ const queueFile = path.join(dayDir, "07_auto_publish_queue.csv");
 const decisionsFile = path.join(dayDir, "09_pre_publish_decisions.csv");
 const scheduleFile = path.join(dayDir, "06_posting_schedule.csv");
 const logFile = path.join(dayDir, "10_publish_log.csv");
+const stateDir = path.join(root, "published_state");
+const stateFile = path.join(stateDir, `${date}.json`);
 
 function parseCsv(text) {
   const rows = [];
@@ -94,11 +96,26 @@ function scheduleMap(rows) {
 function alreadyPostedMap(rows) {
   const map = new Set();
   for (const row of rows) {
-    if (row.status === "posted" || row.status === "dry_run") {
+    if (row.status === "posted") {
       map.add(`${row.platform}|${row.post}`);
     }
   }
   return map;
+}
+
+function readPublishedState() {
+  if (!fs.existsSync(stateFile)) return new Set();
+  const json = JSON.parse(fs.readFileSync(stateFile, "utf8"));
+  return new Set(json.posted ?? []);
+}
+
+function writePublishedState(posted) {
+  fs.mkdirSync(stateDir, { recursive: true });
+  fs.writeFileSync(stateFile, JSON.stringify({
+    date,
+    posted: [...posted].sort(),
+    updatedAt: new Date().toISOString(),
+  }, null, 2) + "\n", "utf8");
 }
 
 function isDue(row, scheduleByPost) {
@@ -159,7 +176,7 @@ async function postToThreads(text) {
 function eligibleRows(queue, decisions) {
   const decisionsByPost = decisionMap(decisions);
   const scheduleByPost = scheduleMap(readCsv(scheduleFile));
-  const posted = alreadyPostedMap(readCsv(logFile));
+  const posted = new Set([...alreadyPostedMap(readCsv(logFile)), ...readPublishedState()]);
   return queue.filter((row) => {
     const text = normalizeText(row.text);
     const decision = decisionsByPost.get(`${row.platform}|${row.post}`);
@@ -203,6 +220,7 @@ const eligible = eligibleRows(queue, decisions);
 console.log(`Eligible posts: ${eligible.length}`);
 
 const logs = [];
+const postedState = readPublishedState();
 for (const row of eligible) {
   const text = normalizeText(row.text);
   try {
@@ -215,6 +233,7 @@ for (const row of eligible) {
     const remoteId = row.platform === "X" ? await postToX(text) : await postToThreads(text);
     console.log(`Posted ${row.platform} ${row.post}: ${remoteId}`);
     logs.push({ ...row, status: "posted", remoteId, message: "ok" });
+    postedState.add(`${row.platform}|${row.post}`);
   } catch (error) {
     console.error(`Failed ${row.platform} ${row.post}: ${error.message}`);
     logs.push({ ...row, status: "failed", remoteId: "", message: error.message });
@@ -222,3 +241,6 @@ for (const row of eligible) {
 }
 
 appendLog(logs);
+if (!dryRun && logs.some((row) => row.status === "posted")) {
+  writePublishedState(postedState);
+}

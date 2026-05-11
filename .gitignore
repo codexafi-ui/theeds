@@ -3,3 +3,7 @@ node_modules/
 *.log
 daily_ops/*/10_publish_log.csv
 daily_ops/*/09_pre_publish_decisions.csv
+!daily_ops/
+!daily_ops/**/
+!daily_ops/*/10_publish_log.csv
+!daily_ops/*/09_pre_publish_decisions.csv
