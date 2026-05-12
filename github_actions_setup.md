@@ -90,10 +90,10 @@ dry_run = false
 
 ## Schedule
 
-The workflow runs as an hourly watcher:
+The workflow runs as a frequent watcher:
 
 ```text
-Once per hour
+At minutes 05, 20, 35, and 50 each hour
 ```
 
 Actual post times are not fixed. They are generated daily in:
@@ -102,7 +102,7 @@ Actual post times are not fixed. They are generated daily in:
 daily_ops/YYYY-MM-DD/06_posting_schedule.csv
 ```
 
-The publisher only posts items whose randomized schedule time is due within the last 420 minutes. It writes published posts to `published_state/YYYY-MM-DD.json` and commits that state back to the repository, so delayed runs can recover without posting the same item twice.
+The publisher only posts items whose randomized schedule time is due within the last 720 minutes. It writes published posts to `published_state/YYYY-MM-DD.json` and commits that state back to the repository, so delayed runs can recover without posting the same item twice.
 
 ## Important
 

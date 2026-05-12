@@ -24,8 +24,13 @@ on:
           - "Threads Post 1"
           - "Threads Post 2"
   schedule:
-    # Hourly watcher. Actual posts use randomized times in daily_ops/YYYY-MM-DD/06_posting_schedule.csv.
-    - cron: "17 * * * *"
+    # Watcher. Actual posts use randomized times in daily_ops/YYYY-MM-DD/06_posting_schedule.csv.
+    # GitHub schedules can be delayed or skipped, so we check several times per hour.
+    - cron: "5,20,35,50 * * * *"
+
+concurrency:
+  group: threads-auto-publish
+  cancel-in-progress: false
 
 jobs:
   threads:
@@ -40,6 +45,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -68,7 +75,7 @@ jobs:
 
       - name: Publish Threads
         if: ${{ github.event_name == 'schedule' }}
-        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --due-minutes 420
+        run: node publish_social_queue.mjs --date "${{ steps.date.outputs.date }}" --platform Threads --due-minutes 720
 
       - name: Require manual post selection
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == 'false' && inputs.post == '' }}
@@ -85,6 +92,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           if [ -d published_state ]; then
             git add -A published_state
           fi
@@ -93,7 +101,7 @@ jobs:
           fi
           if [ -n "$(git diff --cached --name-only)" ]; then
             git commit -m "Update Threads publish state [skip ci]"
-            git push
+            git push || (git pull --rebase origin main && git push)
           else
             echo "No publish state changes."
           fi

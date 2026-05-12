@@ -169,11 +169,11 @@ Threads:
 2本目: 21:45〜23:30
 ```
 
-GitHub Actionsは1時間ごとに見回り、予定時刻から420分以内の投稿だけ実行します。投稿済みのものは `published_state/YYYY-MM-DD.json` に記録して二重投稿を防ぎます。
+GitHub Actionsは1時間に4回見回り、予定時刻から720分以内の投稿だけ実行します。投稿済みのものは `published_state/YYYY-MM-DD.json` に記録して二重投稿を防ぎます。
 
 ```text
 GitHub Actions:
-1時間ごとに起動
+毎時 05 / 20 / 35 / 50 分に起動
 
 06_posting_schedule.csv:
 日ごとの投稿予定時刻
@@ -387,7 +387,7 @@ Threads Auto Publish
 ↓
 投稿前チェック
 ↓
-予定時刻から420分以内のThreads投稿だけ実行
+予定時刻から720分以内のThreads投稿だけ実行
 ```
 
 手動実行:
