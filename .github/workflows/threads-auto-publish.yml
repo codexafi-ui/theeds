@@ -83,10 +83,15 @@ jobs:
       - name: Commit publish state
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == 'false') }}
         run: |
-          if [ -n "$(git status --porcelain -- published_state/ daily_ops/)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add published_state/ daily_ops/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -d published_state ]; then
+            git add -A published_state
+          fi
+          if [ -d daily_ops ]; then
+            git add -A daily_ops
+          fi
+          if [ -n "$(git diff --cached --name-only)" ]; then
             git commit -m "Update Threads publish state [skip ci]"
             git push
           else
