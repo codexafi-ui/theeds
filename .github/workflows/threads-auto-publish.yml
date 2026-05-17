@@ -26,7 +26,7 @@ on:
   schedule:
     # Watcher. Actual posts use randomized times in daily_ops/YYYY-MM-DD/06_posting_schedule.csv.
     # GitHub schedules can be delayed or skipped, so we check several times per hour.
-    - cron: "5,20,35,50 * * * *"
+    - cron: "*/10 * * * *"
 
 concurrency:
   group: threads-auto-publish
