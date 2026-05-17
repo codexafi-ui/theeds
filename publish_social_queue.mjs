@@ -128,6 +128,18 @@ function isDue(row, scheduleByPost) {
   return diffMinutes >= 0 && diffMinutes <= dueMinutes;
 }
 
+function dueStatus(row, scheduleByPost) {
+  if (dueMinutes === null || Number.isNaN(dueMinutes)) return "due check disabled";
+  const schedule = scheduleByPost.get(`${row.platform}|${row.post}`);
+  if (!schedule?.time) return "no schedule time";
+  const scheduledAt = new Date(`${date}T${schedule.time}:00+09:00`);
+  const now = new Date();
+  const diffMinutes = Math.round((now.getTime() - scheduledAt.getTime()) / 60000);
+  if (diffMinutes < 0) return `not due yet (${Math.abs(diffMinutes)} min early)`;
+  if (diffMinutes > dueMinutes) return `missed window (${diffMinutes} min after scheduled time)`;
+  return `due (${diffMinutes} min after scheduled time)`;
+}
+
 async function postToX(text) {
   const token = process.env.X_ACCESS_TOKEN || process.env.X_BEARER_TOKEN;
   if (!token) throw new Error("X_ACCESS_TOKEN is not set.");
@@ -194,6 +206,27 @@ function eligibleRows(queue, decisions) {
   });
 }
 
+function printThreadsDiagnostics(queue, decisions) {
+  const decisionsByPost = decisionMap(decisions);
+  const scheduleByPost = scheduleMap(readCsv(scheduleFile));
+  const posted = new Set([...alreadyPostedMap(readCsv(logFile)), ...readPublishedState()]);
+  const rows = queue.filter((row) => !onlyPlatform || row.platform.toLowerCase() === onlyPlatform.toLowerCase());
+  for (const row of rows) {
+    if (row.platform !== "Threads") continue;
+    const key = `${row.platform}|${row.post}`;
+    const decision = decisionsByPost.get(key);
+    const reasons = [];
+    if (onlyPost && row.post.toLowerCase() !== onlyPost.toLowerCase()) reasons.push("different manual post target");
+    if (posted.has(key)) reasons.push("already posted");
+    if (!isDue(row, scheduleByPost)) reasons.push(dueStatus(row, scheduleByPost));
+    if (row.status !== "auto_ready_after_precheck") reasons.push(`queue status=${row.status}`);
+    if (decision?.decision !== "clear_to_post") reasons.push(`precheck=${decision?.decision || "missing"}`);
+    if (hasUrl(row.text)) reasons.push("contains URL");
+    if (strongRisk(row.text)) reasons.push("strong claim");
+    console.log(`Queue ${key}: ${reasons.length ? `skip: ${reasons.join("; ")}` : "eligible"}`);
+  }
+}
+
 function appendLog(rows) {
   const exists = fs.existsSync(logFile);
   const lines = [];
@@ -218,6 +251,7 @@ if (!decisions.length) {
 
 const eligible = eligibleRows(queue, decisions);
 console.log(`Eligible posts: ${eligible.length}`);
+printThreadsDiagnostics(queue, decisions);
 
 const logs = [];
 const postedState = readPublishedState();
@@ -243,4 +277,7 @@ for (const row of eligible) {
 appendLog(logs);
 if (!dryRun && logs.some((row) => row.status === "posted")) {
   writePublishedState(postedState);
+}
+if (!dryRun && logs.some((row) => row.status === "failed")) {
+  process.exitCode = 1;
 }
