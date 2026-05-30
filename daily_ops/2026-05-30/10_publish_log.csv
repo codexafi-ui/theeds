@@ -1,3 +1,4 @@
 "date","platform","post","status","remoteId","message","publishedAt"
 
 
+"2026-05-30","Threads","Threads Post 1","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""ACiw_DxISMPxd1M0q-jQof5""}}","2026-05-30T12:17:57.163Z"
