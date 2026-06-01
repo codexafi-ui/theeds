@@ -1,3 +1,5 @@
 "date","platform","post","status","remoteId","message","publishedAt"
 
 
+"2026-06-01","Threads","Threads Post 1","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""Ax_2i6yRcXnWW4mSPLqs_n8""}}","2026-06-01T19:23:18.292Z"
+"2026-06-01","Threads","Threads Post 2","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""AL9hze5CrD8XVUO39GZpJm4""}}","2026-06-01T19:23:18.292Z"
