@@ -6,3 +6,4 @@
 "2026-06-05","Threads","Threads Post 1","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""A9vn3yIHqHCTh4VZk01djOh""}}","2026-06-05T22:44:14.942Z"
 "2026-06-05","Threads","Threads Post 2","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""AwDUj74JxE9VjHVuBdZfPLG""}}","2026-06-05T22:44:14.942Z"
 
+
