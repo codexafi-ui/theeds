@@ -23,3 +23,4 @@
 "2026-06-21","Threads","Threads Post 2","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""AAkLwpfTKxOiI3KVWnIG4vM""}}","2026-06-21T21:24:16.295Z"
 "2026-06-21","Threads","Threads Post 1","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""AmVfHCGh162_rEOfq0uPvXP""}}","2026-06-21T22:39:08.615Z"
 "2026-06-21","Threads","Threads Post 2","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""AYCqaW90-fGnOB1HBQSSU-N""}}","2026-06-21T22:39:08.615Z"
+"2026-06-21","Threads","Threads Post 2","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""APJB4E4sHT3d8wfzFfZp5nk""}}","2026-06-21T23:54:24.202Z"
