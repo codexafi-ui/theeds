@@ -12,3 +12,4 @@
 
 
 
+"2026-07-05","Threads","Threads Post 1","failed","","Threads create error 400: {""error"":{""message"":""API access blocked."",""type"":""OAuthException"",""code"":200,""fbtrace_id"":""A9OYAm6hY6kt6VQUjOaZnSx""}}","2026-07-05T13:00:29.395Z"
