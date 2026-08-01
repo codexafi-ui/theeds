@@ -30,3 +30,5 @@
 "2026-08-01","Threads","Threads Post 2","failed","","Threads create error 500: ","2026-08-01T21:23:28.387Z"
 "2026-08-01","Threads","Threads Post 1","failed","","Threads create error 500: {""error"":{""code"":1,""message"":""An unknown error occurred""}}","2026-08-01T22:15:06.491Z"
 "2026-08-01","Threads","Threads Post 2","failed","","Threads create error 500: {""error"":{""code"":1,""message"":""An unknown error occurred""}}","2026-08-01T22:15:06.491Z"
+"2026-08-01","Threads","Threads Post 1","failed","","Threads create error 500: {""error"":{""code"":1,""message"":""An unknown error occurred""}}","2026-08-01T23:10:53.249Z"
+"2026-08-01","Threads","Threads Post 2","failed","","Threads create error 500: {""error"":{""code"":1,""message"":""An unknown error occurred""}}","2026-08-01T23:10:53.249Z"
