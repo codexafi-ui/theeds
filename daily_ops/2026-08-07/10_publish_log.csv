@@ -10,3 +10,5 @@
 
 
 "2026-08-07","Threads","Threads Post 1","failed","","Threads create error 500: ","2026-08-07T13:22:24.405Z"
+"2026-08-07","Threads","Threads Post 1","failed","","Threads create error 500: {""error"":{""code"":1,""message"":""An unknown error occurred""}}","2026-08-07T14:28:43.853Z"
+"2026-08-07","Threads","Threads Post 2","failed","","Threads create error 500: {""error"":{""code"":1,""message"":""An unknown error occurred""}}","2026-08-07T14:28:43.853Z"
