@@ -6,3 +6,4 @@
 
 
 
+"2026-09-06","Threads","Threads Post 1","failed","","Threads create error 400: {""error"":{""message"":""Error validating access token: Session has expired on Thursday, 09-Jul-26 05:54:17 PDT. The current time is Sunday, 06-Sep-26 06:04:14 PDT."",""type"":""OAuthException"",""code"":190,""error_subcode"":0,""fbtrace_id"":""AJ1aMOoFF6CoUETiqlOdUOb""}}","2026-09-06T13:04:14.754Z"
