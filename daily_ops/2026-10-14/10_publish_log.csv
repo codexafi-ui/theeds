@@ -11,3 +11,4 @@
 "2026-10-14","Threads","Threads Post 2","failed","","Threads create error 400: {""error"":{""message"":""Error validating access token: Session has expired on Thursday, 09-Jul-26 05:54:17 PDT. The current time is Wednesday, 14-Oct-26 16:09:49 PDT."",""type"":""OAuthException"",""code"":190,""error_subcode"":0,""fbtrace_id"":""AoNARiFLwoICRdcSWEZeHo3""}}","2026-10-14T23:09:50.010Z"
 "2026-10-14","Threads","Threads Post 2","failed","","Threads create error 400: {""error"":{""message"":""Error validating access token: Session has expired on Thursday, 09-Jul-26 05:54:17 PDT. The current time is Wednesday, 14-Oct-26 18:25:11 PDT."",""type"":""OAuthException"",""code"":190,""error_subcode"":0,""fbtrace_id"":""A0NoqeDLyycze8Tj3025G8a""}}","2026-10-15T01:25:11.565Z"
 
+
